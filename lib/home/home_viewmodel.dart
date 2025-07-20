@@ -4,6 +4,7 @@ import 'package:family_tree/bottomsheet/addmemberbottomsheet_view.dart';
 import 'package:family_tree/model/family_member.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -26,15 +27,21 @@ class HomeViewModel extends BaseViewModel {
   }
 
   int calculateAge(String birthDate) {
-    final birth = DateTime.tryParse(birthDate);
-    if (birth == null) return 0;
+  try {
+    final birth = DateFormat('dd/MM/yyyy').parseStrict(birthDate);
     final today = DateTime.now();
+
     int age = today.year - birth.year;
     if (today.month < birth.month || (today.month == birth.month && today.day < birth.day)) {
       age--;
     }
+
     return age;
+  } catch (e) {
+    return 0; // Return 0 if parsing fails
   }
+}
+
 
   void addFamilyMember(BuildContext context) {
     showModalBottomSheet(
