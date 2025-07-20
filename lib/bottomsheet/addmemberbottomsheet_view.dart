@@ -1,6 +1,7 @@
 import 'package:family_tree/bottomsheet/addmemberbottomsheet_viewmodel.dart';
 import 'package:family_tree/model/family_member.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 class AddMemberBottomSheetView extends StackedView<AddMemberBottomSheetViewModel> {
@@ -74,7 +75,7 @@ class AddMemberBottomSheetView extends StackedView<AddMemberBottomSheetViewModel
                   lastDate: DateTime.now(),
                 );
                 if (pickedDate != null) {
-                  viewModel.birthDateController.text = pickedDate.toIso8601String().split('T').first;
+                  viewModel.birthDateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
                 }
               },
             ),
@@ -106,7 +107,7 @@ class AddMemberBottomSheetView extends StackedView<AddMemberBottomSheetViewModel
                     lastDate: DateTime.now(),
                   );
                   if (pickedDate != null) {
-                    viewModel.deathDateController.text = pickedDate.toIso8601String().split('T').first;
+                    viewModel.deathDateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
                   }
                 },
               ),

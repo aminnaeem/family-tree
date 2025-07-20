@@ -1,6 +1,7 @@
 import 'package:family_tree/model/family_member.dart';
 import 'package:family_tree/memberdetails/memberdetails_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 
@@ -59,7 +60,7 @@ class MemberDetailView extends StatelessWidget {
                         lastDate: DateTime.now(),
                       );
                       if (pickedDate != null) {
-                        viewModel.birthDateController.text = pickedDate.toIso8601String().split('T').first;
+                        viewModel.birthDateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
                       }
                     },
                   ),
@@ -89,7 +90,7 @@ class MemberDetailView extends StatelessWidget {
                           lastDate: DateTime.now(),
                         );
                         if (pickedDate != null) {
-                          viewModel.deathDateController.text = pickedDate.toIso8601String().split('T').first;
+                          viewModel.deathDateController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
                         }
                       },
                     ),
