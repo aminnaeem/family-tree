@@ -29,11 +29,21 @@ class HomeView extends StatelessWidget {
               model.members.isEmpty
                   ? const Center(child: Text('Press the button to add a member'))
                   : ListView.builder(
-                      padding: const EdgeInsets.all(8.0),
-                      itemCount: model.members.length,
-                      itemBuilder: (context, index) {
-                        final member = model.members[index];
-                        return Card(
+                    padding: const EdgeInsets.all(8.0),
+                    itemCount: model.members.length,
+                    itemBuilder: (context, index) {
+                      final member = model.members[index];
+                      return Dismissible(
+                        key: Key(member.name + index.toString()), // unique key
+                        direction: DismissDirection.endToStart, // swipe left to delete
+                        background: Container(
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          color: const Color.fromARGB(87, 244, 67, 54),
+                          child: const Icon(Icons.delete, color: Colors.white),
+                        ),
+                        onDismissed: (_) => model.deleteMember(index),
+                        child: Card(
                           elevation: 2,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
@@ -60,9 +70,11 @@ class HomeView extends StatelessWidget {
                             ),
                             onTap: () => model.openMemberDetail(index),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
+                  ),
+
             ],
           ),
           floatingActionButton: FloatingActionButton(

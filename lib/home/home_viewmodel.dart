@@ -50,6 +50,11 @@ class HomeViewModel extends BaseViewModel {
     );
   }
 
+  void deleteMember(int index) {
+    members.removeAt(index);
+    notifyListeners();
+  }
+
   void openMemberDetail(int index) {
     _navigationService.navigateToMemberDetailView(
       index: index,
