@@ -1,12 +1,8 @@
-// viewmodels/member_detail_viewmodel.dart
-
 import 'dart:io';
-
-import 'package:family_tree/model/family_member.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:stacked/stacked.dart';
+import 'package:family_tree/model/family_member.dart';
+import 'package:hive/hive.dart';
 
 class MemberDetailViewModel extends BaseViewModel {
   final int index;
@@ -21,7 +17,6 @@ class MemberDetailViewModel extends BaseViewModel {
   bool isAlive = true;
 
   File? selectedImage;
-
   String? imagePath;
 
   MemberDetailViewModel({
@@ -41,17 +36,25 @@ class MemberDetailViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void save(BuildContext context) {
+  Future<void> save(BuildContext context) async {
     final updated = FamilyMember(
       name: nameController.text,
       relationship: relationshipController.text,
       birthDate: birthDateController.text,
       deathDate: isAlive ? null : deathDateController.text,
       isAlive: isAlive,
-      imagePath: imagePath,
     );
 
     onUpdate(index, updated);
+
+    // Save to Hive
+    final box = await Hive.openBox<FamilyMember>('familyBox');
+    if (index < box.length) {
+      await box.putAt(index, updated);
+    } else {
+      await box.add(updated);
+    } // update record at index
+
     Navigator.of(context).pop();
   }
 
@@ -62,19 +65,5 @@ class MemberDetailViewModel extends BaseViewModel {
     birthDateController.dispose();
     deathDateController.dispose();
     super.dispose();
-  }
-
-  Future<void> pickImage() async {
-    final picker = ImagePicker();
-    final picked = await picker.pickImage(source: ImageSource.gallery);
-
-    if (picked != null) {
-      final directory = await getApplicationDocumentsDirectory();
-      final savedImage = File('${directory.path}/${picked.name}');
-      await File(picked.path).copy(savedImage.path);
-
-      imagePath = savedImage.path;
-      notifyListeners();
-    }
   }
 }

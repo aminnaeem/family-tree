@@ -19,15 +19,11 @@ class FamilyMember {
   @HiveField(4)
   final bool isAlive;
 
-  @HiveField(5)
-  final String? imagePath;
-
   FamilyMember({
     required this.name,
     required this.relationship,
     required this.birthDate,
     this.deathDate,
     required this.isAlive,
-    required this.imagePath
   });
 }

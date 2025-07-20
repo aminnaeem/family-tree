@@ -22,14 +22,13 @@ class FamilyMemberAdapter extends TypeAdapter<FamilyMember> {
       birthDate: fields[2] as String,
       deathDate: fields[3] as String?,
       isAlive: fields[4] as bool,
-      imagePath: fields[5] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, FamilyMember obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -39,9 +38,7 @@ class FamilyMemberAdapter extends TypeAdapter<FamilyMember> {
       ..writeByte(3)
       ..write(obj.deathDate)
       ..writeByte(4)
-      ..write(obj.isAlive)
-      ..writeByte(5)
-      ..write(obj.imagePath);
+      ..write(obj.isAlive);
   }
 
   @override

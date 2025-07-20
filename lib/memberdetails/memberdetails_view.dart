@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:family_tree/model/family_member.dart';
 import 'package:family_tree/memberdetails/memberdetails_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -36,18 +38,18 @@ class MemberDetailView extends StatelessWidget {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: viewModel.pickImage,
+                    onTap: (){},
                     child: CircleAvatar(
                       radius: 50,
-                      backgroundColor: Colors.grey[300],
-                      backgroundImage: viewModel.selectedImage != null
-                          ? FileImage(viewModel.selectedImage!)
-                          : null,
-                      child: viewModel.selectedImage == null
-                          ? const Icon(Icons.camera_alt, size: 30, color: Colors.grey)
-                          : null,
+                      backgroundImage: viewModel.imagePath != null && viewModel.imagePath!.isNotEmpty
+                        ? FileImage(File(viewModel.imagePath!))
+                        : null,
+                      child: viewModel.imagePath == null || viewModel.imagePath!.isEmpty
+                        ? const Icon(Icons.person, size: 40)
+                        : null,
                     ),
                   ),
+                  const SizedBox(height: 20),
                   const SizedBox(height: 20),
                   TextField(
                     controller: viewModel.nameController,

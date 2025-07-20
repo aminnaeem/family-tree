@@ -55,6 +55,8 @@ class AddMemberBottomSheetViewModel extends BaseViewModel {
         : selectedRelationship ?? '';
   }
 
+  String? imagePath;
+
   void save(BuildContext context) {
     final member = FamilyMember(
       name: nameController.text.trim(),
