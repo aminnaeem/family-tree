@@ -35,6 +35,20 @@ class MemberDetailView extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
+                  GestureDetector(
+                    onTap: viewModel.pickImage,
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.grey[300],
+                      backgroundImage: viewModel.selectedImage != null
+                          ? FileImage(viewModel.selectedImage!)
+                          : null,
+                      child: viewModel.selectedImage == null
+                          ? const Icon(Icons.camera_alt, size: 30, color: Colors.grey)
+                          : null,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   TextField(
                     controller: viewModel.nameController,
                     decoration: const InputDecoration(labelText: 'Name'),

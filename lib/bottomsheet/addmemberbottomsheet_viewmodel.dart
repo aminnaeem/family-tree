@@ -24,6 +24,8 @@ class AddMemberBottomSheetViewModel extends BaseViewModel {
     'Uncle',
     'Aunt',
     'Cousin',
+    'Husband',
+    'Wife',
     'Other',
   ];
 

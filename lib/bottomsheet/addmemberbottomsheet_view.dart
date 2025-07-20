@@ -117,6 +117,7 @@ class AddMemberBottomSheetView extends StackedView<AddMemberBottomSheetViewModel
               onPressed: () => viewModel.save(context),
               child: const Text('Save'),
             ),
+            const SizedBox(height: 40),
           ],
         ),
       ),

@@ -1,7 +1,11 @@
 // viewmodels/member_detail_viewmodel.dart
 
+import 'dart:io';
+
 import 'package:family_tree/model/family_member.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:stacked/stacked.dart';
 
 class MemberDetailViewModel extends BaseViewModel {
@@ -15,6 +19,10 @@ class MemberDetailViewModel extends BaseViewModel {
   late final TextEditingController deathDateController;
 
   bool isAlive = true;
+
+  File? selectedImage;
+
+  String? imagePath;
 
   MemberDetailViewModel({
     required this.index,
@@ -40,6 +48,7 @@ class MemberDetailViewModel extends BaseViewModel {
       birthDate: birthDateController.text,
       deathDate: isAlive ? null : deathDateController.text,
       isAlive: isAlive,
+      imagePath: imagePath,
     );
 
     onUpdate(index, updated);
@@ -53,5 +62,19 @@ class MemberDetailViewModel extends BaseViewModel {
     birthDateController.dispose();
     deathDateController.dispose();
     super.dispose();
+  }
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    final picked = await picker.pickImage(source: ImageSource.gallery);
+
+    if (picked != null) {
+      final directory = await getApplicationDocumentsDirectory();
+      final savedImage = File('${directory.path}/${picked.name}');
+      await File(picked.path).copy(savedImage.path);
+
+      imagePath = savedImage.path;
+      notifyListeners();
+    }
   }
 }

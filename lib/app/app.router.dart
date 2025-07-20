@@ -5,9 +5,9 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:family_tree/model/family_member.dart' as _i5;
 import 'package:family_tree/home/home_view.dart' as _i2;
 import 'package:family_tree/memberdetails/memberdetails_view.dart' as _i3;
+import 'package:family_tree/model/family_member.dart' as _i5;
 import 'package:flutter/material.dart' as _i4;
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart' as _i1;

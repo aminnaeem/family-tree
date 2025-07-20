@@ -39,6 +39,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   path_provider: ^2.1.1
+  image_picker: ^1.1.2
   
 
 dev_dependencies:
@@ -60,8 +61,8 @@ flutter_icons:
   android: true
   ios: true
   image_path: "asset/logo/logo_icon.png"
-  adaptive_icon_background: "#ffffff" # Optional for Android 8.0+
-  adaptive_icon_foreground: "asset/logo/logo_icon.png" # Optional
+  # adaptive_icon_background: "#ffffff" # Optional for Android 8.0+
+  # adaptive_icon_foreground: "asset/logo/logo_icon.png" # Optional
 
 
 # For information on the generic Dart part of this file, see the
