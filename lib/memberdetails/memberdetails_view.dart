@@ -38,7 +38,7 @@ class MemberDetailView extends StatelessWidget {
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: (){},
+                    onTap: () => viewModel.pickImage(context),
                     child: CircleAvatar(
                       radius: 50,
                       backgroundImage: viewModel.imagePath != null && viewModel.imagePath!.isNotEmpty

@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:stacked/stacked.dart';
 import 'package:family_tree/model/family_member.dart';
 import 'package:hive/hive.dart';
@@ -43,12 +45,13 @@ class MemberDetailViewModel extends BaseViewModel {
       birthDate: birthDateController.text,
       deathDate: isAlive ? null : deathDateController.text,
       isAlive: isAlive,
+      imagePath: imagePath,
     );
 
     onUpdate(index, updated);
 
     // Save to Hive
-    final box = await Hive.openBox<FamilyMember>('familyBox');
+    final box = await Hive.openBox<FamilyMember>('members');
     if (index < box.length) {
       await box.putAt(index, updated);
     } else {
@@ -57,6 +60,45 @@ class MemberDetailViewModel extends BaseViewModel {
 
     Navigator.of(context).pop();
   }
+
+  Future<void> pickImage(BuildContext context) async {
+    final status = await Permission.photos.request();
+
+    if (status.isGranted) {
+      final picker = ImagePicker();
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+      if (pickedFile != null) {
+        imagePath = pickedFile.path;
+        notifyListeners();
+      }
+    } else if (status.isDenied || status.isPermanentlyDenied) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Permission Required'),
+          content: const Text(
+            'This app needs access to your gallery to pick an image. '
+            'Please grant the permission in app settings.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                openAppSettings(); // opens system app settings
+                Navigator.of(context).pop();
+              },
+              child: const Text('Open Settings'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
 
   @override
   void dispose() {

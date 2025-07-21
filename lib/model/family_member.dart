@@ -1,6 +1,6 @@
 import 'package:hive/hive.dart';
 
-part 'family_member.g.dart'; // Needed for code generation
+part 'family_member.g.dart';
 
 @HiveType(typeId: 0)
 class FamilyMember {
@@ -19,11 +19,15 @@ class FamilyMember {
   @HiveField(4)
   final bool isAlive;
 
+  @HiveField(5)
+  final String? imagePath; // <-- NEW field
+
   FamilyMember({
     required this.name,
     required this.relationship,
     required this.birthDate,
     this.deathDate,
     required this.isAlive,
+    this.imagePath, // <-- Include in constructor
   });
 }

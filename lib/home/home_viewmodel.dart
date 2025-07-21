@@ -38,7 +38,7 @@ class HomeViewModel extends BaseViewModel {
 
     return age;
   } catch (e) {
-    return 0; // Return 0 if parsing fails
+    return 0; 
   }
 }
 
@@ -50,7 +50,7 @@ class HomeViewModel extends BaseViewModel {
       builder: (context) => AddMemberBottomSheetView(
         onSave: (member) {
           _members.add(member);
-          _box.add(member); // Save to Hive
+          _box.add(member);
           notifyListeners();
         },
       ),
@@ -68,7 +68,7 @@ class HomeViewModel extends BaseViewModel {
       member: _members[index],
       onUpdate: (i, updatedMember) {
         _members[i] = updatedMember;
-        _box.putAt(i, updatedMember); // Update Hive too
+        _box.putAt(i, updatedMember);
         notifyListeners();
       },
     );

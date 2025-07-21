@@ -34,7 +34,7 @@ class HomeView extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final member = model.members[index];
                       return Dismissible(
-                        key: Key(member.name + index.toString()), // unique key
+                        key: Key(member.name + index.toString()),
                         direction: DismissDirection.endToStart, // swipe left to delete
                         background: Container(
                           alignment: Alignment.centerRight,
